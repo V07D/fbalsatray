@@ -2,8 +2,13 @@
 #include <alsa/mixer.h>
 #include <stdio.h>
 
-void SetAlsaVolume(const char* card, const char* selem_name, long volume);
-void GetAlsaVolume(const char* card, const char* selem_name, long* volume, long max);
+// struct alsa_control_struct {
+//     snd_mixer_t *handle;
+//     snd_mixer_elem_t* elem;
+// }
+
+void SetAlsaVolume(long volume);
+void GetAlsaVolume(long* volume, long max);
 void SetAlsaSwitchMute(const char* card, const char* selem_name);
 
 void SetAlsaSwitchMute(const char* card, const char* selem_name) {
@@ -34,24 +39,26 @@ void SetAlsaSwitchMute(const char* card, const char* selem_name) {
     snd_mixer_close(handle);
 }
 
-snd_mixer_elem_t* GetElem(const char* card, const char* selem_name) {
-    snd_mixer_t *handle;
-    snd_mixer_selem_id_t *sid;
+// alsa_control_struct GetStruct(const char* card, const char* selem_name) {
+//     snd_mixer_t *handle;
+//     snd_mixer_selem_id_t *sid;
 
-    snd_mixer_open(&handle, 0);
-    snd_mixer_attach(handle, card);
-    snd_mixer_selem_register(handle, NULL, NULL);
-    snd_mixer_load(handle);
+//     snd_mixer_open(&handle, 0);
+//     snd_mixer_attach(handle, card);
+//     snd_mixer_selem_register(handle, NULL, NULL);
+//     snd_mixer_load(handle);
 
-    snd_mixer_selem_id_alloca(&sid);
-    snd_mixer_selem_id_set_index(sid, 0);
-    snd_mixer_selem_id_set_name(sid, selem_name);
-    snd_mixer_elem_t* elem = snd_mixer_find_selem(handle, sid);
+//     snd_mixer_selem_id_alloca(&sid);
+//     snd_mixer_selem_id_set_index(sid, 0);
+//     snd_mixer_selem_id_set_name(sid, selem_name);
+//     snd_mixer_elem_t* elem = snd_mixer_find_selem(handle, sid);
 
-    return elem;
-}
+//     return elem;
+// }
 
-void SetAlsaVolume(const char* card, const char* selem_name, long volume) {
+void SetAlsaVolume(long volume) {
+    const char *card = "default";
+    const char *selem_name = "Master";
     long min, max;
     snd_mixer_t *handle;
     snd_mixer_selem_id_t *sid;
@@ -73,7 +80,9 @@ void SetAlsaVolume(const char* card, const char* selem_name, long volume) {
     snd_mixer_close(handle);
 }
 
-void GetAlsaVolume(const char* card, const char* selem_name, long* volume, long max) {
+void GetAlsaVolume(long* volume, long max) {
+    const char *card = "default";
+    const char *selem_name = "Master";
     long min;
     snd_mixer_t *handle;
     snd_mixer_selem_id_t *sid;

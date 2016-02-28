@@ -10,22 +10,18 @@ static gboolean HandleMouseScrollWheel(GtkWidget *pWidget, GdkEventScroll *pEven
 
 	if(pEvent->direction == GDK_SCROLL_UP) {
 		printf("\tWHEEL UP!\n");
-		const char *card = "default";
-		const char *selem_name = "Master";
 		//SetAlsaVolume(card, selem_name, 100);
 		long max,volume;
-		GetAlsaVolume(card,selem_name,&volume,&max);
-		SetAlsaVolume(card, selem_name, volume+1);
+		GetAlsaVolume(&volume,&max);
+		SetAlsaVolume(volume+1);
 		printf("max:%ld, volume: %ld\n",max,volume);
 	}
 	else if(pEvent->direction == GDK_SCROLL_DOWN) {
 		printf("\tWHEEL DOWN!\n");
-		const char *card = "default";
-		const char *selem_name = "Master";
 		//SetAlsaVolume(card, selem_name, 100);
 		long max,volume;
-		GetAlsaVolume(card,selem_name,&volume,&max);
-		SetAlsaVolume(card, selem_name, volume-1);
+		GetAlsaVolume(&volume,&max);
+		SetAlsaVolume(volume-1);
 		printf("max:%ld, volume: %ld\n",max,volume);
 	}
 
