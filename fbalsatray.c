@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <glib.h>
+#include "volume.h"
 
 void tray_icon_on_click(GtkStatusIcon *status_icon, gpointer user_data) {
 	printf("YOBA\n");
@@ -11,18 +12,18 @@ static gboolean HandleMouseScrollWheel(GtkWidget *pWidget, GdkEventScroll *pEven
 	if(pEvent->direction == GDK_SCROLL_UP) {
 		printf("\tWHEEL UP!\n");
 		//SetAlsaVolume(card, selem_name, 100);
-		long max,volume;
-		GetAlsaVolume(&volume,&max);
+		long volume;
+		GetAlsaVolume(&volume);
 		SetAlsaVolume(volume+1);
-		printf("max:%ld, volume: %ld\n",max,volume);
+		printf("volume: %ld\n",volume);
 	}
 	else if(pEvent->direction == GDK_SCROLL_DOWN) {
 		printf("\tWHEEL DOWN!\n");
 		//SetAlsaVolume(card, selem_name, 100);
-		long max,volume;
-		GetAlsaVolume(&volume,&max);
+		long volume;
+		GetAlsaVolume(&volume);
 		SetAlsaVolume(volume-1);
-		printf("max:%ld, volume: %ld\n",max,volume);
+		printf("volume: %ld\n",volume);
 	}
 
 	return 0;
